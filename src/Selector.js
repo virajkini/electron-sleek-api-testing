@@ -3,31 +3,14 @@ import { ipcRenderer } from 'electron';
 
 import { Container } from './styles';
 
+import evaluations from './evaluations';
+
 class Selector extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      evaluations: [{
-        env: 'FLIPKART',
-        name: 'Flipkart Default',
-        completed: false,
-        landingUrl: 'https://flipkart.com/search',
-        rating: '',
-      }, {
-        env: 'FLIPKART',
-        name: 'Flipkart Logged In',
-        completed: false,
-        landingUrl: 'https://flipkart.com/search',
-        sessionId: '2.VIDED13C5D5E314C30A5D7A99259025B53.SI2B701D0297CB4DF8BC0FEDED1CC02A4D.VSFF17FB43D70342FFBFF1247449972D56.1553356937',
-        rating: '',
-      }, {
-        env: 'AMAZON',
-        name: 'Amazon',
-        completed: false,
-        landingUrl: 'https://www.amazon.in/s/ref=nb_sb_noss_2',
-        rating: '',
-      }],
+      evaluations: [...evaluations],
       query: 'shoes',
     };
 

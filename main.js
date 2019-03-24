@@ -5,8 +5,8 @@ let envWindow;
 let questionsWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1280, height: 720, titleBarStyle: 'hidden' })
-  mainWindow.loadURL('http://localhost:3000')
+  mainWindow = new BrowserWindow({ width: 1280, height: 720 });
+  mainWindow.loadURL('http://localhost:3000');
   mainWindow.on('closed', () => {
     mainWindow = null;
     envWindow = null;
@@ -32,7 +32,6 @@ ipcMain.on('start-evaluation', (event, data) => {
   envWindow = new BrowserWindow({
     width: 1000,
     height: 720,
-    titleBarStyle: 'hidden',
     x: 100,
     y: 400,
     parent: mainWindow,
@@ -42,7 +41,6 @@ ipcMain.on('start-evaluation', (event, data) => {
   questionsWindow = new BrowserWindow({
     width: 280,
     height: 720,
-    titleBarStyle: 'hidden',
     x: 1100,
     y: 400,
     parent: envWindow,
@@ -69,9 +67,11 @@ ipcMain.on('start-evaluation', (event, data) => {
   envWindow.webContents.session.clearStorageData();
 
   if (data.sessionId) {
-    envWindow.webContents.session.cookies.set({ url: 'https://www.flipkart.com', name: 'SN', value: data.sessionId }, () => {
-
-    });
+    envWindow.webContents.session.cookies.set({
+      url: 'https://www.flipkart.com',
+      name: 'SN',
+      value: data.sessionId
+    }, () => {});
   }
 
   switch (data.env) {
