@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 
+import { QuestionnaireContainer } from './styles';
+
 class Questionnaire extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +32,11 @@ class Questionnaire extends Component {
   render() {
 
     return (
-      <React.Fragment>
-        <h1>Provide a PBAGE Rating</h1>
+      <QuestionnaireContainer>
+        <h2>Provide a PBAGE Rating</h2>
 
         <select value={this.state.rating} onChange={this.handleSelection}>
+          <option value=''> Select a rating </option>
           <option value='Poor'> Poor </option>
           <option value='Bad'> Bad </option>
           <option value='Average'> Average </option>
@@ -42,9 +45,14 @@ class Questionnaire extends Component {
         </select>
 
         <div>
-          <button onClick={this.handleSubmit}>Done</button>
+          <button
+            disabled={!this.state.rating}
+            onClick={this.handleSubmit}
+          >
+            Done
+          </button>
         </div>
-      </React.Fragment>
+      </QuestionnaireContainer>
     );
   }
 }

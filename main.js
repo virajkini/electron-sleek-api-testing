@@ -5,7 +5,7 @@ let envWindow;
 let questionsWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1280, height: 720 })
+  mainWindow = new BrowserWindow({ width: 1280, height: 720, titleBarStyle: 'hidden' })
   mainWindow.loadURL('http://localhost:3000')
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -29,8 +29,42 @@ app.on('activate', () => {
 });
 
 ipcMain.on('start-evaluation', (event, data) => {
-  envWindow = new BrowserWindow({ width: 1280, height: 720, parent: mainWindow, backgroundColor: '#eee' });
-  questionsWindow = new BrowserWindow({ width: 500, height: 720, parent: mainWindow, backgroundColor: '#eee' });
+  envWindow = new BrowserWindow({
+    width: 1000,
+    height: 720,
+    titleBarStyle: 'hidden',
+    x: 100,
+    y: 400,
+    parent: mainWindow,
+    backgroundColor: '#eee',
+    resizable: false,
+  });
+  questionsWindow = new BrowserWindow({
+    width: 280,
+    height: 720,
+    titleBarStyle: 'hidden',
+    x: 1100,
+    y: 400,
+    parent: envWindow,
+    backgroundColor: '#eee',
+    resizable: false,
+  });
+
+  questionsWindow.on('closed', () => {
+    if (envWindow) {
+      envWindow.close();
+    }
+    envWindow = null;
+    questionsWindow = null;
+  });
+
+  envWindow.on('closed', () => {
+    if (questionsWindow) {
+      questionsWindow.close();
+    }
+    envWindow = null;
+    questionsWindow = null;
+  });
 
   envWindow.webContents.session.clearStorageData();
 

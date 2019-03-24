@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 
+import { Container } from './styles';
+
 class Selector extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,8 @@ class Selector extends Component {
         completed: false,
         landingUrl: 'https://www.amazon.in/s/ref=nb_sb_noss_2',
         rating: '',
-      }]
+      }],
+      query: 'shoes',
     };
 
     ipcRenderer.on('evaluation-complete', (event, data) => {
@@ -59,29 +62,38 @@ class Selector extends Component {
   }
 
   render() {
-    const evaluationIncomplete = this.state.evaluations.find((evaluation) => !evaluation.completed || !evaluation.rating);
-
     return (
-      <React.Fragment>
+      <Container>
+        <div className='title'>
+          <h2>Query: {this.state.query}</h2>
+        </div>
+        <div className='row header'>
+          <div>Website</div>
+          <div>AB Experiment</div>
+          <div>Rating</div>
+          <div></div>
+        </div>
         {
           this.state.evaluations.map((evaluation, index) => (
-            <div key={index}>
-              <button
-                data-id={index}
-                onClick={this.handleEvaluation}
-              >
-                {evaluation.name}
-              </button>
-              <span>
-                {evaluation.completed ? ` [Completed: ${evaluation.rating}] ` : ''}
-              </span>
+            <div className='row' key={index}>
+              <div>
+                {evaluation.env}
+              </div>
+              <div>
+                {evaluation.sessionId ? 'Yes' : 'No'}
+              </div>
+              <div>
+                {evaluation.rating || 'Pending'}
+              </div>
+              <div>
+                <button data-id={index} onClick={this.handleEvaluation}>
+                  {evaluation.completed ? 'Re-evaluate' : 'Start Evaluation'}
+                </button>
+              </div>
             </div>
           ))
         }
-        <button disabled={evaluationIncomplete}>
-          Submit
-        </button>
-      </React.Fragment>
+      </Container>
     );
   }
 }
