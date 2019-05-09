@@ -54,17 +54,6 @@ export const Container = Styled.div`
       align-items: center;
     }
 
-    button {
-      border: 0;
-      background-color: transparent;
-      color: #1B72F9;
-
-      &:hover {
-        color: #1E6AD9;
-        cursor: pointer;
-      }
-    }
-
     &.header {
       border: none;
     }
@@ -72,6 +61,17 @@ export const Container = Styled.div`
 
   .header {
     font-weight: 700;
+  }
+`;
+
+export const StyledEvalButton = Styled.button`
+  border: 0;
+  background-color: transparent;
+  color: #1B72F9;
+
+  &:hover {
+    color: #1E6AD9;
+    cursor: pointer;
   }
 `;
 

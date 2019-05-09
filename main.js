@@ -7,12 +7,14 @@ let questionsWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 1280, height: 720 });
   mainWindow.loadURL('http://localhost:3000');
+  mainWindow.openDevTools()
   mainWindow.on('closed', () => {
     mainWindow = null;
     envWindow = null;
     questionsWindow = null;
   });
 }
+
 
 app.on('ready', createWindow)
 
@@ -29,6 +31,7 @@ app.on('activate', () => {
 });
 
 ipcMain.on('start-evaluation', (event, data) => {
+  
   envWindow = new BrowserWindow({
     width: 1000,
     height: 720,
@@ -93,6 +96,7 @@ ipcMain.on('finish-evaluation', (event, data) => {
   mainWindow.webContents.send('evaluation-complete', {
     evaluationId: data.id,
     rating: data.rating,
+    result: data.result
   });
 
   envWindow.close();

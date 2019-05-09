@@ -16,11 +16,18 @@ class Questionnaire extends Component {
     if (!this.state.rating) {
       return;
     }
-
-    ipcRenderer.send('finish-evaluation', {
-      id: this.props.match.params.id,
-      rating: this.state.rating,
-    });
+    let result;
+    
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(response => response.json())
+        .then(data => {
+            result = data
+            ipcRenderer.send('finish-evaluation', {
+              id: this.props.match.params.id,
+              rating: this.state.rating,
+              result
+        });
+      })
   }
 
   handleSelection = (e) => {
@@ -43,7 +50,7 @@ class Questionnaire extends Component {
           <option value='Good'> Good </option>
           <option value='Excellent'> Excellent </option>
         </select>
-
+        
         <div>
           <button
             disabled={!this.state.rating}
