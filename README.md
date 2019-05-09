@@ -15,5 +15,4 @@
 
 This will start the client app via [webpack-dev-server](https://github.com/webpack/webpack-dev-server) on port 3000 and the electron app which loads `http://localhost:3000` on load.
 
-Note**
-
+Cloned from : https://github.com/abinavseelan/electron-env-sandboxing
